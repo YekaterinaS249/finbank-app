@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>FinBank — Log In</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav>
+    <span class="brand">FinBank</span>
+</nav>
+<div class="container">
+    <div class="card">
+        <h1>Log in to your account</h1>
+
+        <p class="success-banner" th:if="${param.registered}" data-testid="registered-banner">
+            Registration successful — please log in.
+        </p>
+        <p class="success-banner" th:if="${param.logout}" data-testid="logout-banner">
+            You have been logged out.
+        </p>
+        <!-- LOGIN-WEB-003: generic anti-enumeration message for wrong/unknown credentials or a blocked account. -->
+        <p class="error-banner" th:if="${param.error}" data-testid="login-error">
+            Неверный email или пароль.
+        </p>
+
+        <form th:action="@{/login}" method="post" data-testid="login-form">
+            <label for="username">Email</label>
+            <input type="email" id="username" name="username" data-testid="email-input"
+                   autocomplete="username" maxlength="254" required>
+            <!-- LOGIN-FIELD-EMAIL-001: exact required-field message, set by LoginFieldPresenceFilter. -->
+            <span class="field-error" th:if="${param.emailError}" data-testid="email-error">
+                Введите email.
+            </span>
+
+            <label for="password">Password</label>
+            <div class="password-field">
+                <input type="password" id="password" name="password" data-testid="password-input"
+                       autocomplete="current-password" required>
+                <button type="button" class="toggle-password" data-testid="toggle-password"
+                        aria-label="Show password" onclick="toggleLoginPasswordVisibility()">Show</button>
+            </div>
+            <!-- LOGIN-FIELD-PASSWORD-001: exact required-field message, set by LoginFieldPresenceFilter. -->
+            <span class="field-error" th:if="${param.passwordError}" data-testid="password-error">
+                Введите пароль.
+            </span>
+
+            <button type="submit" data-testid="login-button">Log In</button>
+        </form>
+
+        <p class="muted" style="margin-top:20px;">
+            No account yet? <a th:href="@{/register}" data-testid="go-to-register">Register</a>
+        </p>
+    </div>
+</div>
+<script>
+    // LOGIN-FIELD-PASSWORD-005: optional show/hide toggle. Purely a display
+    // affordance — never trims, copies, or otherwise transforms the value,
+    // and never logs it.
+    function toggleLoginPasswordVisibility() {
+        var input = document.getElementById('password');
+        var button = document.querySelector('[data-testid="toggle-password"]');
+        var isHidden = input.type === 'password';
+        input.type = isHidden ? 'text' : 'password';
+        button.textContent = isHidden ? 'Hide' : 'Show';
+        button.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+    }
+</script>
+</body>
+</html>

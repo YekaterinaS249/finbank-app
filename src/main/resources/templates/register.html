@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>FinBank — Register</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav>
+    <span class="brand">FinBank</span>
+</nav>
+<div class="container">
+    <div class="card">
+        <h1>Create your account</h1>
+
+        <form th:action="@{/register}" th:object="${registerRequest}" method="post" data-testid="register-form">
+
+            <label for="firstName">First name</label>
+            <input type="text" id="firstName" th:field="*{firstName}" data-testid="register-firstname">
+            <span class="field-error" th:if="${fieldErrors?.get('firstName')}"
+                  th:each="err : ${fieldErrors?.get('firstName')}"
+                  th:text="${err.message}" data-testid="firstname-error"></span>
+
+            <label for="lastName">Last name</label>
+            <input type="text" id="lastName" th:field="*{lastName}" data-testid="register-lastname">
+            <span class="field-error" th:if="${fieldErrors?.get('lastName')}"
+                  th:each="err : ${fieldErrors?.get('lastName')}"
+                  th:text="${err.message}" data-testid="lastname-error"></span>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" th:field="*{email}" data-testid="register-email">
+            <span class="field-error" th:if="${fieldErrors?.get('email')}"
+                  th:each="err : ${fieldErrors?.get('email')}"
+                  th:text="${err.message}" data-testid="email-error"></span>
+
+            <label for="phone">Phone (E.164, e.g. +14155552671)</label>
+            <input type="text" id="phone" th:field="*{phone}" data-testid="register-phone">
+            <span class="field-error" th:if="${fieldErrors?.get('phone')}"
+                  th:each="err : ${fieldErrors?.get('phone')}"
+                  th:text="${err.message}" data-testid="phone-error"></span>
+
+            <label for="dateOfBirth">Date of birth</label>
+            <input type="date" id="dateOfBirth" th:field="*{dateOfBirth}" data-testid="register-dob">
+            <span class="field-error" th:if="${fieldErrors?.get('dateOfBirth')}"
+                  th:each="err : ${fieldErrors?.get('dateOfBirth')}"
+                  th:text="${err.message}" data-testid="dob-error"></span>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" th:field="*{password}" autocomplete="new-password" data-testid="register-password">
+            <span class="field-error" th:if="${fieldErrors?.get('password')}"
+                  th:each="err : ${fieldErrors?.get('password')}"
+                  th:text="${err.message}" data-testid="password-error"></span>
+
+            <label for="confirmPassword">Confirm password</label>
+            <input type="password" id="confirmPassword" th:field="*{confirmPassword}" autocomplete="new-password" data-testid="register-confirm-password">
+            <span class="field-error" th:if="${fieldErrors?.get('confirmPassword')}"
+                  th:each="err : ${fieldErrors?.get('confirmPassword')}"
+                  th:text="${err.message}" data-testid="confirm-password-error"></span>
+
+            <label class="checkbox-label" style="margin-top:16px; font-weight:400;">
+                <input type="checkbox" id="termsAccepted" th:field="*{termsAccepted}"
+                       data-testid="register-terms" style="width:auto; margin-right:8px;">
+                I accept the Terms &amp; Conditions and Privacy Policy
+            </label>
+            <span class="field-error" th:if="${fieldErrors?.get('termsAccepted')}"
+                  th:each="err : ${fieldErrors?.get('termsAccepted')}"
+                  th:text="${err.message}" data-testid="terms-error"></span>
+
+            <button type="submit" data-testid="register-submit">Register</button>
+        </form>
+
+        <p class="muted" style="margin-top:20px;">
+            Already have an account? <a th:href="@{/login}" data-testid="go-to-login">Log in</a>
+        </p>
+    </div>
+</div>
+</body>
+</html>

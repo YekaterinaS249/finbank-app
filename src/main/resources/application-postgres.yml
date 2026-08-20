@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://ep-autumn-butterfly-ayjnyu4p-pooler.c-5.us-east-2.aws.neon.tech/neondb?sslmode=require
+    driver-class-name: org.postgresql.Driver
+    username: neondb_owner
+    password: ${FINBANK_DB_PASSWORD:npg_KBRQAXG76xHp}
+  h2:
+    console:
+      enabled: false
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update

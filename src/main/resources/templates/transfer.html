@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>FinBank — Transfer Funds</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav>
+    <span class="brand">FinBank</span>
+    <span>
+        <a th:href="@{/dashboard}" data-testid="nav-dashboard">Dashboard</a>
+        <a th:href="@{/transfer}" data-testid="nav-transfer">Transfer</a>
+        <a th:href="@{/logout}" data-testid="nav-logout">Log out</a>
+    </span>
+</nav>
+<div class="container">
+    <div class="card">
+        <h1>Transfer funds</h1>
+
+        <p class="success-banner" th:if="${successMessage}" data-testid="transfer-success" th:text="${successMessage}"></p>
+        <p class="error-banner" th:if="${transferError}" data-testid="transfer-error" th:text="${transferError}"></p>
+
+        <form th:action="@{/transfer}" th:object="${transferRequest}" method="post" data-testid="transfer-form">
+            <label for="fromAccountNumber">From account</label>
+            <select id="fromAccountNumber" th:field="*{fromAccountNumber}" data-testid="transfer-from">
+                <option value="">Select account</option>
+                <option th:each="account : ${accounts}" th:value="${account.accountNumber}"
+                        th:text="${account.accountNumber} + ' (' + ${#numbers.formatDecimal(account.balance,1,2)} + ' ' + ${account.currency} + ')'"></option>
+            </select>
+            <span class="field-error" th:if="${#fields.hasErrors('fromAccountNumber')}" th:errors="*{fromAccountNumber}"></span>
+
+            <label for="toAccountNumber">To account number</label>
+            <input type="text" id="toAccountNumber" th:field="*{toAccountNumber}" placeholder="FB0123456789" data-testid="transfer-to">
+            <span class="field-error" th:if="${#fields.hasErrors('toAccountNumber')}" th:errors="*{toAccountNumber}"></span>
+
+            <label for="amount">Amount</label>
+            <input type="number" step="0.01" id="amount" th:field="*{amount}" data-testid="transfer-amount">
+            <span class="field-error" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></span>
+
+            <label for="description">Description (optional)</label>
+            <input type="text" id="description" th:field="*{description}" data-testid="transfer-description">
+
+            <button type="submit" data-testid="transfer-submit">Transfer</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

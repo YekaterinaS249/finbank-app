@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FinBank — Registration (Design Mockup)</title>
+<style>
+  :root {
+    --primary: #2451e0;
+    --primary-dark: #1a3db8;
+    --ink: #16182b;
+    --muted: #6b7280;
+    --border: #e2e5eb;
+    --bg: #f4f6fb;
+    --card: #ffffff;
+    --error: #d13438;
+    --error-bg: #fdecec;
+    --success: #16794f;
+    --success-bg: #e9f9f1;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+  }
+  .topbar {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo { font-weight: 800; font-size: 20px; color: var(--primary); letter-spacing: -0.02em; }
+  .logo span { color: var(--ink); }
+  .mockup-note {
+    font-size: 12px;
+    color: var(--muted);
+    background: #fff8e1;
+    border: 1px solid #f0d98c;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .state-switcher {
+    max-width: 480px;
+    margin: 28px auto 0;
+    display: flex;
+    gap: 8px;
+    padding: 4px;
+    background: #eceff5;
+    border-radius: 10px;
+  }
+  .state-switcher button {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 9px 10px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .state-switcher button.active {
+    background: var(--card);
+    color: var(--primary);
+    box-shadow: 0 1px 3px rgba(20,25,50,0.12);
+  }
+
+  .wrap {
+    max-width: 480px;
+    margin: 24px auto 60px;
+    padding: 0 20px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    box-shadow: 0 1px 2px rgba(20,25,50,0.04);
+  }
+
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .subtitle { color: var(--muted); font-size: 14px; margin: 0 0 24px; }
+
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #384156;
+    margin-top: 16px;
+    margin-bottom: 6px;
+  }
+  label .req { color: var(--error); }
+
+  input[type=text], input[type=email], input[type=password], input[type=date], input[type=tel] {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #fbfcfe;
+    transition: border-color .15s;
+  }
+  input:focus { outline: none; border-color: var(--primary); background: #fff; }
+  input.invalid { border-color: var(--error); background: #fffaf9; }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 5px; }
+  .field-error {
+    font-size: 12.5px;
+    color: var(--error);
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .field-error::before { content: "⚠"; font-size: 11px; }
+
+  .checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 20px;
+    font-size: 13px;
+    color: #384156;
+    line-height: 1.4;
+  }
+  .checkbox-row input { width: 16px; height: 16px; margin-top: 2px; accent-color: var(--primary); }
+  .checkbox-row a { color: var(--primary); text-decoration: none; }
+
+  button.submit {
+    width: 100%;
+    margin-top: 24px;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 13px;
+    border-radius: 8px;
+    font-size: 14.5px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  button.submit:hover { background: var(--primary-dark); }
+
+  .banner {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .banner.error { background: var(--error-bg); color: var(--error); border: 1px solid #f3c6c7; }
+  .banner.success { background: var(--success-bg); color: var(--success); border: 1px solid #b7e6cc; }
+
+  .footer-link { text-align: center; font-size: 13px; color: var(--muted); margin-top: 22px; }
+  .footer-link a { color: var(--primary); text-decoration: none; font-weight: 600; }
+
+  .success-screen { text-align: center; padding: 20px 0 4px; }
+  .success-icon {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--success-bg); color: var(--success);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; margin: 0 auto 18px;
+  }
+
+  .annotation {
+    font-size: 11px;
+    color: #9aa3b5;
+    text-align: center;
+    margin-top: 18px;
+  }
+
+  [data-testid] { position: relative; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo"><span>Fin</span>Bank</div>
+  <div class="mockup-note">Design mockup — не подключено к бэкенду</div>
+</div>
+
+<div class="state-switcher">
+  <button class="active" onclick="showState('empty', this)">Пустая форма</button>
+  <button onclick="showState('errors', this)">С ошибками</button>
+  <button onclick="showState('success', this)">Успех</button>
+</div>
+
+<div class="wrap">
+
+  <!-- STATE 1: Empty / default -->
+  <div id="state-empty" class="card">
+    <h1>Create your account</h1>
+    <p class="subtitle">Takes about 2 minutes.</p>
+
+    <div class="row">
+      <div>
+        <label for="e-firstName">First name <span class="req">*</span></label>
+        <input type="text" id="e-firstName" data-testid="register-firstname" placeholder="Jane">
+      </div>
+      <div>
+        <label for="e-lastName">Last name <span class="req">*</span></label>
+        <input type="text" id="e-lastName" data-testid="register-lastname" placeholder="Doe">
+      </div>
+    </div>
+
+    <label for="e-email">Email <span class="req">*</span></label>
+    <input type="email" id="e-email" data-testid="register-email" placeholder="jane.doe@example.com">
+
+    <label for="e-phone">Phone <span class="req">*</span></label>
+    <input type="tel" id="e-phone" data-testid="register-phone" placeholder="+14155552671">
+    <div class="hint">International format, e.g. +14155552671</div>
+
+    <label for="e-dob">Date of birth <span class="req">*</span></label>
+    <input type="date" id="e-dob" data-testid="register-dob">
+
+    <label for="e-password">Password <span class="req">*</span></label>
+    <input type="password" id="e-password" data-testid="register-password" placeholder="At least 15 characters" autocomplete="new-password">
+    <div class="hint">15–128 characters. Any characters allowed — no required mix of upper/lower case, digits or symbols.</div>
+
+    <label for="e-confirm">Confirm password <span class="req">*</span></label>
+    <input type="password" id="e-confirm" data-testid="register-confirm-password" autocomplete="new-password">
+
+    <label class="checkbox-row" style="margin-top:20px; display:flex;">
+      <input type="checkbox" data-testid="register-terms">
+      <span>I accept the <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a> <span class="req">*</span></span>
+    </label>
+
+    <button class="submit" data-testid="register-submit">Create account</button>
+
+    <div class="footer-link">Already have an account? <a href="#">Log in</a></div>
+    <div class="annotation">Состояние 1 из 3 — все поля пустые, ошибок ещё нет (до первого submit)</div>
+  </div>
+
+  <!-- STATE 2: Validation errors -->
+  <div id="state-errors" class="card" style="display:none;">
+    <h1>Create your account</h1>
+    <p class="subtitle">Takes about 2 minutes.</p>
+
+    <div class="banner error" data-testid="register-error-banner">
+      <span>⚠</span>
+      <span>We found 7 issues with the form below. Please fix them and try again.</span>
+    </div>
+
+    <div class="row">
+      <div>
+        <label for="x-firstName">First name <span class="req">*</span></label>
+        <input type="text" id="x-firstName" class="invalid" value="John123" data-testid="register-firstname">
+        <div class="field-error" data-testid="firstname-error">First name may only contain letters, spaces, hyphens and apostrophes</div>
+      </div>
+      <div>
+        <label for="x-lastName">Last name <span class="req">*</span></label>
+        <input type="text" id="x-lastName" value="Doe" data-testid="register-lastname">
+      </div>
+    </div>
+
+    <label for="x-email">Email <span class="req">*</span></label>
+    <input type="email" id="x-email" class="invalid" value="jane.doe@" data-testid="register-email">
+    <div class="field-error" data-testid="email-error">Email must be a valid address</div>
+
+    <label for="x-phone">Phone <span class="req">*</span></label>
+    <input type="tel" id="x-phone" class="invalid" value="14155552671" data-testid="register-phone">
+    <div class="field-error" data-testid="phone-error">Phone number must be in E.164 format, e.g. +14155552671</div>
+
+    <label for="x-dob">Date of birth <span class="req">*</span></label>
+    <input type="date" id="x-dob" class="invalid" value="2015-05-01" data-testid="register-dob">
+    <div class="field-error" data-testid="dob-error">You must be at least 18 years old to register</div>
+
+    <label for="x-password">Password <span class="req">*</span></label>
+    <input type="password" id="x-password" class="invalid" value="short1234" data-testid="register-password" autocomplete="new-password">
+    <div class="field-error" data-testid="password-error">Password must be at least 15 characters</div>
+
+    <label for="x-confirm">Confirm password <span class="req">*</span></label>
+    <input type="password" id="x-confirm" class="invalid" value="differentPassword12345" data-testid="register-confirm-password" autocomplete="new-password">
+    <div class="field-error" data-testid="confirm-password-error">Пароли не совпадают.</div>
+
+    <label class="checkbox-row" style="margin-top:20px; display:flex;">
+      <input type="checkbox" data-testid="register-terms">
+      <span>I accept the <a href="#">Terms &amp; Conditions</a> and <a href="#">Privacy Policy</a> <span class="req">*</span></span>
+    </label>
+    <div class="field-error" data-testid="terms-error" style="margin-left:26px;">You must accept the Terms &amp; Conditions to register</div>
+
+    <button class="submit" data-testid="register-submit">Create account</button>
+
+    <div class="footer-link">Already have an account? <a href="#">Log in</a></div>
+    <div class="annotation">Состояние 2 из 3 — collect-all: все нарушенные правила показаны одновременно за один submit</div>
+  </div>
+
+  <!-- STATE 3: Success -->
+  <div id="state-success" class="card" style="display:none;">
+    <div class="success-screen">
+      <div class="success-icon">✓</div>
+      <h1 style="margin-bottom:8px;">Account created</h1>
+      <p class="subtitle" style="margin-bottom:0;">
+        We've sent a verification link to <strong>jane.doe@example.com</strong>.
+      </p>
+    </div>
+
+    <div class="banner success" style="margin-top:20px;" data-testid="registered-banner">
+      <span>✓</span>
+      <span>Please check your inbox and click the link to verify your email before logging in.</span>
+    </div>
+
+    <button class="submit" data-testid="go-to-login" style="margin-top:20px;">Go to login</button>
+
+    <div class="annotation">Состояние 3 из 3 — после успешной регистрации. Обратите внимание: это отражает design‑target v2 (с email‑верификацией), а не текущее поведение реализованного кода, где после регистрации сразу идёт редирект на /login без письма — см. примечание ниже.</div>
+  </div>
+
+</div>
+
+<script>
+function showState(name, btn) {
+  ['empty','errors','success'].forEach(function (s) {
+    document.getElementById('state-' + s).style.display = (s === name) ? 'block' : 'none';
+  });
+  document.querySelectorAll('.state-switcher button').forEach(function (b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: finbank
+  profiles:
+    active: postgres
+  datasource:
+    url: jdbc:h2:mem:finbank;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: false
+  thymeleaf:
+    cache: false
+
+server:
+  port: 8080
+
+finbank:
+  jwt:
+    secret: ${FINBANK_JWT_SECRET:this-is-a-demo-secret-key-for-finbank-app-do-not-use-in-prod-1234567890}
+    expiration-minutes: 30
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>FinBank — Transactions</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav>
+    <span class="brand">FinBank</span>
+    <span>
+        <a th:href="@{/dashboard}" data-testid="nav-dashboard">Dashboard</a>
+        <a th:href="@{/transfer}" data-testid="nav-transfer">Transfer</a>
+        <a th:href="@{/logout}" data-testid="nav-logout">Log out</a>
+    </span>
+</nav>
+<div class="container">
+    <div class="card">
+        <h1 th:text="'Transactions — ' + ${account.accountNumber}"></h1>
+        <div class="balance" data-testid="current-balance"
+             th:text="${#numbers.formatDecimal(account.balance,1,2)} + ' ' + ${account.currency}"></div>
+
+        <table data-testid="transactions-table">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Direction</th>
+                <th>Amount</th>
+                <th>Counterparty</th>
+                <th>Balance after</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tx : ${transactions}" th:attr="data-testid='tx-row-' + ${tx.id}">
+                <td th:text="${tx.createdAt}"></td>
+                <td th:class="${tx.direction == T(com.finbank.model.TransactionDirection).CREDIT} ? 'direction-credit' : 'direction-debit'"
+                    th:text="${tx.direction}"></td>
+                <td th:text="${#numbers.formatDecimal(tx.amount,1,2)}"></td>
+                <td th:text="${tx.counterpartyAccountNumber}"></td>
+                <td th:text="${#numbers.formatDecimal(tx.balanceAfter,1,2)}"></td>
+                <td th:text="${tx.description}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p class="muted" th:if="${#lists.isEmpty(transactions)}" data-testid="no-transactions">No transactions yet.</p>
+    </div>
+</div>
+</body>
+</html>

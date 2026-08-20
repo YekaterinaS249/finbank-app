@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>FinBank — Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<nav>
+    <span class="brand">FinBank</span>
+    <span>
+        <a th:href="@{/dashboard}" data-testid="nav-dashboard">Dashboard</a>
+        <a th:href="@{/transfer}" data-testid="nav-transfer">Transfer</a>
+        <a th:href="@{/logout}" data-testid="nav-logout">Log out</a>
+    </span>
+</nav>
+<div class="container">
+    <h1 data-testid="welcome-heading" th:text="'Welcome, ' + ${user.fullName}"></h1>
+
+    <div class="card" th:each="account : ${accounts}" th:attr="data-testid='account-card-' + ${account.accountNumber}">
+        <h2 th:text="${account.type} + ' account'"></h2>
+        <div class="muted" data-testid="account-number" th:text="${account.accountNumber}"></div>
+        <div class="balance" data-testid="account-balance"
+             th:text="${#numbers.formatDecimal(account.balance,1,2)} + ' ' + ${account.currency}"></div>
+        <a class="btn" th:href="@{/accounts/{id}/transactions(id=${account.accountNumber})}"
+           data-testid="view-transactions">View transactions</a>
+    </div>
+
+    <div class="card" th:if="${#lists.isEmpty(accounts)}" data-testid="no-accounts">
+        You don't have any accounts yet.
+    </div>
+</div>
+</body>
+</html>
