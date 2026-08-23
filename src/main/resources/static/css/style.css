@@ -92,6 +92,7 @@ button:hover, .btn:hover { opacity: 0.92; }
 }
 
 .field-error { color: var(--error); font-size: 12px; margin-top: 4px; }
+.field-hint { display: block; color: #6b7280; font-size: 12px; margin-top: 4px; }
 
 .password-field { display: flex; align-items: stretch; gap: 8px; }
 .password-field input { flex: 1; }

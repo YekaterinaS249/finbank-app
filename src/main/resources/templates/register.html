@@ -40,7 +40,9 @@
                   th:text="${err.message}" data-testid="phone-error"></span>
 
             <label for="dateOfBirth">Date of birth</label>
-            <input type="date" id="dateOfBirth" th:field="*{dateOfBirth}" data-testid="register-dob">
+            <input type="text" id="dateOfBirth" th:field="*{dateOfBirth}" data-testid="register-dob"
+                   placeholder="YYYY-MM-DD" inputmode="numeric" autocomplete="bday" maxlength="10">
+            <span class="field-hint" data-testid="dob-hint">Формат: ГГГГ-ММ-ДД, например 1990-01-15</span>
             <span class="field-error" th:if="${fieldErrors?.get('dateOfBirth')}"
                   th:each="err : ${fieldErrors?.get('dateOfBirth')}"
                   th:text="${err.message}" data-testid="dob-error"></span>

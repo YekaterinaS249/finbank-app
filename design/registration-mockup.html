@@ -220,7 +220,8 @@
     <div class="hint">International format, e.g. +14155552671</div>
 
     <label for="e-dob">Date of birth <span class="req">*</span></label>
-    <input type="date" id="e-dob" data-testid="register-dob">
+    <input type="text" id="e-dob" data-testid="register-dob" placeholder="YYYY-MM-DD" inputmode="numeric" autocomplete="bday" maxlength="10">
+    <div class="hint" data-testid="dob-hint">Формат: ГГГГ-ММ-ДД, например 1990-01-15 — вводится вручную, без выпадающего календаря</div>
 
     <label for="e-password">Password <span class="req">*</span></label>
     <input type="password" id="e-password" data-testid="register-password" placeholder="At least 15 characters" autocomplete="new-password">
@@ -271,7 +272,8 @@
     <div class="field-error" data-testid="phone-error">Phone number must be in E.164 format, e.g. +14155552671</div>
 
     <label for="x-dob">Date of birth <span class="req">*</span></label>
-    <input type="date" id="x-dob" class="invalid" value="2015-05-01" data-testid="register-dob">
+    <input type="text" id="x-dob" class="invalid" value="2015-05-01" data-testid="register-dob" placeholder="YYYY-MM-DD" inputmode="numeric" autocomplete="bday" maxlength="10">
+    <div class="hint" data-testid="dob-hint">Формат: ГГГГ-ММ-ДД, например 1990-01-15 — вводится вручную, без выпадающего календаря</div>
     <div class="field-error" data-testid="dob-error">You must be at least 18 years old to register</div>
 
     <label for="x-password">Password <span class="req">*</span></label>
